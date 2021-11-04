@@ -31,7 +31,6 @@ stdenv.mkDerivation {
   installPhase = ''
     mkdir $out
     cp $BUILD/${imgName} $out
-    cp ${imgPath} $out/orig.img
   '';
 
 }
