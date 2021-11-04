@@ -5,12 +5,12 @@ let
     inherit configuration; 
     system = "aarch64-linux"; 
   };
-  mySdImage = customNixos.config.system.build.sdImage;
+  customSdImage = customNixos.config.system.build.sdImage;
   imgName = "nixos-sd-image-21.05.3926.5ebb1dca9bb-aarch64-linux.img";
-  imgPath = "${mySdImage}/sd-image/${imgName}";
+  imgPath = "${customSdImage}/sd-image/${imgName}";
 in
 stdenv.mkDerivation {
-  pname = "my-sd-image";
+  pname = "odroid-c2-sd-image";
   version = "0.1";
   src = ./src;
 
