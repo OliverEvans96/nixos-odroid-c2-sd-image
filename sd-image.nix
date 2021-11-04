@@ -9,7 +9,7 @@
 
   services.openssh = {
     enable = true;
-    permitRootLogin = "prohibitPassword";
+    permitRootLogin = "prohibit-password";
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
