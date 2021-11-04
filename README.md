@@ -10,4 +10,5 @@ This repo simplifies this process into a single `nix build`.
 - https://nixos.wiki/wiki/NixOS_on_ARM/ODROID-C2
 
 ## Instructions
-1. `nix build`
+1. Generate patched image (`nix build`)
+2. Flash SD card (`sudo dd if=result/nixos-sd-image-21.05.3848.f001876680c-aarch64-linux.img of=/dev/sdX status=progress conv=fsync`)
