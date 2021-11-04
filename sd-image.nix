@@ -7,7 +7,12 @@
   # Do not compress the image as we want to use it straight away
   sdImage.compressImage = false;
 
-  environment.systemPackages = with pkgs; [
-    htop
+  services.openssh = {
+    enable = true;
+    permitRootLogin = "prohibitPassword";
+  };
+
+  users.users.root.openssh.authorizedKeys.keyFiles = [
+   "/home/oliver/.ssh/id_rsa.pub"
   ];
 }
