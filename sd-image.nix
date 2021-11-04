@@ -13,6 +13,6 @@
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
-   "/home/oliver/.ssh/id_rsa.pub"
+   "${builtins.getEnv "HOME"}/.ssh/id_rsa.pub"
   ];
 }
