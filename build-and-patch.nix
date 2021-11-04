@@ -6,7 +6,8 @@ let
     system = "aarch64-linux"; 
   };
   mySdImage = customNixos.config.system.build.sdImage;
-  imageName = "nixos-sd-image-21.05.3926.5ebb1dca9bb-aarch64-linux.img";
+  imgName = "nixos-sd-image-21.05.3926.5ebb1dca9bb-aarch64-linux.img";
+  imgPath = "${mySdImage}/sd-image/${imgName}";
 in
 stdenv.mkDerivation {
   pname = "my-sd-image";
@@ -15,21 +16,22 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = with pkgs; [
     bash
-    utillinux # losetup
   ];
 
   # Use sd_fusing script to write ODROID U-Boot on top of SD Image
   buildPhase = ''
-    mkdir $out
-    # TODO: sudo?
-    cp ${mySdImage}/sd-image/${imageName} .
-    loopdev=$(losetup --show -f ${imageName})
+    BUILD=$PWD
+    cp ${imgPath} .
+    chmod u+w ${imgName}
+
     cd ${pkgsCross.aarch64-multiplatform.ubootOdroidC2}
-    bash $src/sd_fusing.sh $loopdev 
-    losetup -d $lopdev
+    bash $src/sd_fusing.sh $BUILD/${imgName}
   '';
 
   installPhase = ''
-    mv ${imageName} $out
+    mkdir $out
+    cp $BUILD/${imgName} $out
+    cp ${imgPath} $out/orig.img
   '';
+
 }
