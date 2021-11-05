@@ -27,9 +27,12 @@ if [ ! -f $UBOOT ]; then
         exit 1
 fi
 
-dd if=$BL1 of=$1 conv=fsync bs=1 count=442
-dd if=$BL1 of=$1 conv=fsync bs=512 skip=1 seek=1
-dd if=$UBOOT of=$1 conv=fsync bs=512 seek=97
+# NOTE: This originally said `conv=fsync`,
+# but conv=notrunc is necessary when `of`
+# points to a file, not a block device.
+dd if=$BL1 of=$1 conv=notrunc bs=1 count=442
+dd if=$BL1 of=$1 conv=notrunc bs=512 skip=1 seek=1
+dd if=$UBOOT of=$1 conv=notrunc bs=512 seek=97
 
 sync
 
